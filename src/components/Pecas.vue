@@ -33,10 +33,10 @@
             <td>{{ p.quantidade }}</td>
             <td>R$ {{ p.preco.toFixed(2) }}</td>
             <td class="actions">
-              <button class="edit" @click="$emit('edit-peca', idx)">
+              <button class="edit" @click="abrirModalAutenticacao('edit', idx)">
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="delete" @click="$emit('delete-peca', idx)">
+              <button class="delete" @click="abrirModalAutenticacao('delete', idx)">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </td>
@@ -45,6 +45,22 @@
       </table>
     </div>
 
+    <!-- Modal de Autenticação -->
+    <div class="modal-overlay" v-if="mostrarModal">
+      <div class="modal">
+        <h3>Autenticação de Administrador</h3>
+        <label>Usuário</label>
+        <input type="text" v-model="usuario" placeholder="Usuário" />
+        <label>Senha</label>
+        <input type="password" v-model="senha" placeholder="Senha" />
+        <div class="modal-actions">
+          <button @click="cancelarModal" class="btn-cancelar">Cancelar</button>
+          <button @click="confirmarAutenticacao" class="btn-confirmar">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulário de Cadastro -->
     <transition name="fade">
       <div v-if="showCadastroPeca" class="cadastro-bloco">
         <h3>{{ editingIndex === null ? 'Nova Peça' : 'Editar Peça' }}</h3>
@@ -110,6 +126,11 @@ export default {
   data() {
     return {
       localFiltro: this.filtroPeca,
+      mostrarModal: false,
+      usuario: '',
+      senha: '',
+      acaoSolicitada: null,
+      indexAlvo: null,
     };
   },
   watch: {
@@ -133,10 +154,86 @@ export default {
     handleSubmit() {
       this.$emit('save-peca');
     },
+    abrirModalAutenticacao(acao, index) {
+      this.acaoSolicitada = acao;
+      this.indexAlvo = index;
+      this.usuario = '';
+      this.senha = '';
+      this.mostrarModal = true;
+    },
+    cancelarModal() {
+      this.mostrarModal = false;
+    },
+    confirmarAutenticacao() {
+      if (this.usuario === 'admin' && this.senha === '1234') {
+        if (this.acaoSolicitada === 'edit') {
+          this.$emit('edit-peca', this.indexAlvo);
+        } else if (this.acaoSolicitada === 'delete') {
+          this.$emit('delete-peca', this.indexAlvo);
+        }
+        this.cancelarModal();
+      } else {
+        alert('Usuário ou senha incorretos.');
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-/* A maior parte do CSS permanece em styles.css global */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.modal h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-cancelar {
+  background: #ccc;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-confirmar {
+  background: #2ecc71;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+}
 </style>
