@@ -97,53 +97,102 @@
         <p>{{ localFiltro ? 'Nenhum orçamento encontrado para sua busca.' : 'Cadastre o primeiro orçamento clicando em "Novo Orçamento".' }}</p>
       </div>
 
-      <!-- Formulário de Cadastro/Edição -->
-      <transition name="fade">
-        <div v-if="showCadastroOrcamento" class="cadastro-bloco">
-          <h3>
-            <i class="fas fa-file-invoice"></i>
-            {{ editingIndex === null ? 'Novo Orçamento' : 'Editar Orçamento' }}
-          </h3>
-          
-          <form @submit.prevent="salvarOrcamento">
-            <!-- Dados do Cliente -->
-            <div class="section-title">
-              <i class="fas fa-user"></i> Dados do Cliente
-            </div>
-            
-            <div class="form-group">
-              <label for="cliente">Nome do Cliente *</label>
-              <input 
-                type="text" 
-                id="cliente" 
-                v-model="formOrcamento.cliente" 
-                required 
-                placeholder="Nome completo do cliente"
-              />
-            </div>
-            
-            <div class="form-group">
-              <label for="documento">CNPJ/CPF *</label>
-              <input
-                type="text"
-                id="documento"
-                v-model="formOrcamento.documento"
-                @input="mascararDocumento"
-                required
-                placeholder="00.000.000/0000-00"
-              />
-            </div>
-            
-            <div class="form-group">
-              <label for="telefone">Telefone</label>
-              <input 
-                type="text" 
-                id="telefone" 
-                v-model="formOrcamento.telefone" 
-                placeholder="(11) 99999-0000"
-                @input="mascararTelefone"
-              />
-            </div>
+    <!-- Formulário de Cadastro/Edição -->
+<transition name="fade">
+  <div v-if="showCadastroOrcamento" class="cadastro-bloco">
+    <h3>
+      <i class="fas fa-file-invoice"></i>
+      {{ editingIndex === null ? 'Novo Orçamento' : 'Editar Orçamento' }}
+    </h3>
+
+    <form @submit.prevent="salvarOrcamento">
+      <!-- Dados do Cliente -->
+      <div class="section-title">
+        <i class="fas fa-user"></i> Dados do Cliente
+      </div>
+
+      <div class="form-group">
+        <label for="cliente">Nome do Cliente *</label>
+        <input
+          type="text"
+          id="cliente"
+          v-model="formOrcamento.cliente"
+          required
+          placeholder="Nome completo do cliente"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="documento">CNPJ/CPF *</label>
+        <input
+          type="text"
+          id="documento"
+          v-model="formOrcamento.documento"
+          @input="mascararDocumento"
+          required
+          placeholder="00.000.000/0000-00"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input
+          type="text"
+          id="telefone"
+          v-model="formOrcamento.telefone"
+          @input="mascararTelefone"
+          placeholder="(11) 99999-0000"
+        />
+      </div>
+
+      <!-- NOVO -->
+      <div class="form-group">
+        <label for="cep">CEP *</label>
+        <input
+          type="text"
+          id="cep"
+          v-model="formOrcamento.cep"
+          @input="mascararCep"
+          required
+          placeholder="00000-000"
+        />
+      </div>
+
+      <!-- NOVO -->
+      <div class="form-group">
+        <label for="rua">Rua *</label>
+        <input
+          type="text"
+          id="rua"
+          v-model="formOrcamento.rua"
+          required
+          placeholder="Nome da rua"
+        />
+      </div>
+
+      <!-- NOVO -->
+      <div class="form-group">
+        <label for="bairro">Bairro *</label>
+        <input
+          type="text"
+          id="bairro"
+          v-model="formOrcamento.bairro"
+          required
+          placeholder="Nome do bairro"
+        />
+      </div>
+
+      <!-- NOVO -->
+      <div class="form-group">
+        <label for="cidade">Cidade *</label>
+        <input
+          type="text"
+          id="cidade"
+          v-model="formOrcamento.cidade"
+          required
+          placeholder="Cidade"
+        />
+      </div>
 
             <!-- Dados do Equipamento -->
             <div class="section-title">
