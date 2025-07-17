@@ -1,5 +1,5 @@
 // =============================================================================
-// src/stores/apiStore.js - Store para gerenciar estado da API
+//  src/stores/apiStore.js - Store para gerenciar estado da API
 // =============================================================================
 import { reactive } from 'vue';
 

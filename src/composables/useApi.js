@@ -1,5 +1,5 @@
 // =============================================================================
-// src/composables/useApi.js - VERSÃO ATUALIZADA COM EQUIPAMENTOS
+//   src/composables/useApi.js - VERSÃO ATUALIZADA COM EQUIPAMENTOS
 // =============================================================================
 import { ref } from 'vue';
 import { api } from '../services/api.js';
